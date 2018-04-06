@@ -24,11 +24,15 @@ for epsilon = min(pval):stepsize:max(pval)
     %       of 0's and 1's of the outlier predictions
 
 
+    predictionsBinary = pval < epsilon;
 
+    tp = sum((predictionsBinary == 1) & (yval == 1));
+    fp = sum((predictionsBinary == 1) & (yval == 0));
+    fn = sum((predictionsBinary == 0) & (yval == 1));
 
-
-
-
+    prec = tp/(tp+fp);
+    rec = tp/(tp+fn);
+    F1 = (2*prec*rec)/(prec+rec);
 
 
 

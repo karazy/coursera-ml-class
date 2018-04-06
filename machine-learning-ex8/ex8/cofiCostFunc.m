@@ -42,13 +42,32 @@ Theta_grad = zeros(size(Theta));
 
 
 
+%For loop solution
+%totalCost = 0;
+%for i=1:num_movies
+%    for j=1:num_users
+%        if R(i,j) == 1
+%            tempCost = ( Theta(j,:) * X(i,:)' - Y(i,j))^2;
+%            totalCost = totalCost + tempCost;
+%        end
+%    end
+%end
 
+%J = totalCost/2;
 
+%Vectorized solution
+J = sum(sum(R.*((X*Theta' - Y).^2)))/2;
 
+regX_grad = lambda * X;
+regTheta_grad = lambda * Theta;
 
+X_grad = (X*Theta' - Y).*R*Theta + regX_grad;
+Theta_grad = (Theta*X' - Y').*R'*X + regTheta_grad;
 
+regX = lambda * sum(sum(Theta.^2))/ 2;
+regTheta = lambda * sum(sum(X.^2))/ 2;
 
-
+J = J + regX + regTheta;
 
 
 
